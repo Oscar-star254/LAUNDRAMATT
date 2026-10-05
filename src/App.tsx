@@ -8,6 +8,7 @@ import {
   ChevronRight,
   CircleDollarSign,
   Clock3,
+  CreditCard,
   Heart,
   HelpCircle,
   Leaf,
@@ -60,6 +61,7 @@ type Booking = {
   day: string;
   window: string;
   detergent: string;
+  paymentMethod: 'Paystack' | 'PayPal' | 'Card';
 };
 
 function Button({
@@ -259,7 +261,7 @@ function Pricing({ onBook }: { onBook: () => void }) {
           <div className="toggle-row"><span><Clock3 size={20} /><i><strong>24-hour rush</strong><small>Get it back tomorrow</small></i></span><button onClick={() => setRush(!rush)} className={`switch ${rush ? 'on' : ''}`} aria-label="Toggle rush service"><b /></button></div>
           <div className="total-row"><span>Estimated total<small>Final price based on actual weight</small></span><strong>${total.toFixed(2)}</strong></div>
           <Button className="full" onClick={onBook}>Schedule my pickup <ArrowRight size={18} /></Button>
-          <p className="secure"><ShieldCheck size={15} /> Secure payment via Stripe · No charge until weighed</p>
+          <p className="secure"><ShieldCheck size={15} /> Secure checkout with card, Paystack, or PayPal</p>
         </div>
       </div>
     </section>
@@ -328,7 +330,7 @@ function Footer({ onBook }: { onBook: () => void }) {
   return (
     <>
       <section className="cta"><div className="shell cta-inner"><div><span>Ready when you are</span><h2>Take laundry off your list this week.</h2><p>Your first pickup is just $35. No subscription required.</p></div><Button onClick={onBook}>Book my first pickup <ArrowRight size={18} /></Button></div></section>
-      <footer><div className="shell footer-grid"><div><Logo /><p>Fresh laundry, picked up and delivered by people you can trust.</p><div className="social-proof"><strong>★★★★★ 4.9</strong><span>380+ happy Tampa customers</span></div></div><div><strong>Explore</strong><a href="#how">How it works</a><a href="#pricing">Services & pricing</a><a href="#areas">Service areas</a><a href="#reviews">Reviews</a></div><div><strong>Trust & help</strong><a href="#reviews">Trust center</a><a href="#faq">FAQs</a><a href="mailto:hello@tampafresh.com">Contact us</a><a href="#top">Policies & guarantee</a></div><div><strong>Visit or call</strong><p>1427 E. Fowler Avenue<br />Tampa, FL 33612</p><a href="tel:+18135559274">(813) 555-WASH</a><a href="mailto:hello@tampafresh.com">hello@tampafresh.com</a><p>Mon–Sat 7am–8pm<br />Sunday 8am–6pm</p></div></div><div className="shell footer-bottom"><span>© 2025 TampaFresh Laundry Co.</span><span>Secure payments by Stripe · Insured & bonded</span></div></footer>
+      <footer><div className="shell footer-grid"><div><Logo /><p>Fresh laundry, picked up and delivered by people you can trust.</p><div className="social-proof"><strong>★★★★★ 4.9</strong><span>380+ happy Tampa customers</span></div></div><div><strong>Explore</strong><a href="#how">How it works</a><a href="#pricing">Services & pricing</a><a href="#areas">Service areas</a><a href="#reviews">Reviews</a></div><div><strong>Trust & help</strong><a href="#reviews">Trust center</a><a href="#faq">FAQs</a><a href="mailto:hello@tampafresh.com">Contact us</a><a href="#top">Policies & guarantee</a></div><div><strong>Visit or call</strong><p>1427 E. Fowler Avenue<br />Tampa, FL 33612</p><a href="tel:+18135559274">(813) 555-WASH</a><a href="mailto:hello@tampafresh.com">hello@tampafresh.com</a><p>Mon–Sat 7am–8pm<br />Sunday 8am–6pm</p></div></div><div className="shell footer-bottom"><span>© 2025 TampaFresh Laundry Co.</span><span>Secure payments by card, Paystack & PayPal · Insured & bonded</span></div></footer>
     </>
   );
 }
@@ -336,23 +338,24 @@ function Footer({ onBook }: { onBook: () => void }) {
 function BookingModal({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
-  const [booking, setBooking] = useState<Booking>({ zip: '33612', day: 'Tomorrow', window: '8am – 11am', detergent: 'Fresh linen' });
+  const [deposit, setDeposit] = useState(10);
+  const [booking, setBooking] = useState<Booking>({ zip: '33612', day: 'Tomorrow', window: '8am – 11am', detergent: 'Fresh linen', paymentMethod: 'Paystack' });
   const valid = servedZips.includes(booking.zip);
   if (done) return (
     <div className="modal-wrap" role="dialog" aria-modal="true">
-      <div className="modal booking-success"><button className="close" onClick={onClose}><X /></button><span className="success-icon"><Check size={34} /></span><h2>You’re on the schedule!</h2><p>We’ll pick up your laundry <strong>{booking.day.toLowerCase()} between {booking.window}</strong>. A confirmation is on its way.</p><div className="confirmation"><span>ORDER TF-2048</span><strong>{booking.zip} · Wash & fold</strong></div><Button onClick={onClose}>Done</Button></div>
+      <div className="modal booking-success"><button className="close" onClick={onClose}><X /></button><span className="success-icon"><Check size={34} /></span><h2>You’re on the schedule!</h2><p>We’ll pick up your laundry <strong>{booking.day.toLowerCase()} between {booking.window}</strong>. Your <strong>${deposit.toFixed(2)} deposit</strong> was submitted through {booking.paymentMethod}.</p><div className="confirmation"><span>ORDER TF-2048</span><strong>{booking.zip} · Wash & fold · ${deposit.toFixed(2)} paid</strong></div><Button onClick={onClose}>Done</Button></div>
     </div>
   );
   return (
     <div className="modal-wrap" role="dialog" aria-modal="true" aria-label="Book a pickup">
       <div className="modal">
         <button className="close" onClick={onClose}><X /></button>
-        <div className="modal-title"><span>Step {step} of 3</span><h2>{step === 1 ? 'Where should we pick up?' : step === 2 ? 'Choose your pickup time' : 'Make it yours'}</h2><p>{step === 1 ? 'First, let’s make sure we serve your neighborhood.' : step === 2 ? 'We’ll text when your driver is on the way.' : 'Tell us exactly how you like your laundry.'}</p></div>
+        <div className="modal-title"><span>Step {step} of 3</span><h2>{step === 1 ? 'Where should we pick up?' : step === 2 ? 'Choose your pickup time' : 'Preferences & deposit'}</h2><p>{step === 1 ? 'First, let’s make sure we serve your neighborhood.' : step === 2 ? 'We’ll text when your driver is on the way.' : 'Choose your laundry preferences and secure the pickup with a deposit.'}</p></div>
         <div className="progress"><i className={step >= 1 ? 'active' : ''} /><i className={step >= 2 ? 'active' : ''} /><i className={step >= 3 ? 'active' : ''} /></div>
         {step === 1 && <div className="form-page"><label>Pickup ZIP code<input value={booking.zip} maxLength={5} onChange={e => setBooking({ ...booking, zip: e.target.value.replace(/\D/g, '') })} /></label>{booking.zip.length === 5 && <p className={`availability ${valid ? 'valid' : 'invalid'}`}>{valid ? <><CheckCircle2 /> We pick up here! Free delivery included.</> : <>We don’t currently serve this ZIP.</>}</p>}<label>Street address<input placeholder="123 Your Street" /></label><label>Apartment or unit <small>Optional</small><input placeholder="Apt 4B" /></label></div>}
         {step === 2 && <div className="form-page"><label>Pickup day</label><div className="choice-grid">{['Tomorrow', 'Wednesday', 'Thursday'].map(day => <button className={booking.day === day ? 'selected' : ''} onClick={() => setBooking({ ...booking, day })} key={day}><CalendarDays /> <strong>{day}</strong><span>{day === 'Tomorrow' ? 'Jun 17' : day === 'Wednesday' ? 'Jun 18' : 'Jun 19'}</span></button>)}</div><label>Time window</label><div className="time-grid">{['8am – 11am', '12pm – 3pm', '5pm – 8pm'].map(window => <button className={booking.window === window ? 'selected' : ''} onClick={() => setBooking({ ...booking, window })} key={window}><Clock3 /> {window}</button>)}</div></div>}
-        {step === 3 && <div className="form-page"><label>Detergent preference</label><div className="detergent-grid">{['Fresh linen', 'Fragrance-free', 'Hypoallergenic'].map(detergent => <button className={booking.detergent === detergent ? 'selected' : ''} onClick={() => setBooking({ ...booking, detergent })} key={detergent}>{detergent === 'Fresh linen' ? <Sparkles /> : <Leaf />}<strong>{detergent}</strong><small>No extra charge</small></button>)}</div><label>Special instructions <small>Optional</small><textarea placeholder="Gate code, leave at door, dog on property…" /></label><div className="booking-total"><span><CircleDollarSign /> First-order offer</span><strong>$35.00</strong></div></div>}
-        <div className="modal-actions">{step > 1 && <Button variant="ghost" onClick={() => setStep(step - 1)}>Back</Button>}<Button className="next" onClick={() => step < 3 ? setStep(step + 1) : setDone(true)}>{step < 3 ? <>Continue <ArrowRight size={18} /></> : <>Confirm pickup <Check size={18} /></>}</Button></div>
+        {step === 3 && <div className="form-page"><label>Detergent preference</label><div className="detergent-grid">{['Fresh linen', 'Fragrance-free', 'Hypoallergenic'].map(detergent => <button className={booking.detergent === detergent ? 'selected' : ''} onClick={() => setBooking({ ...booking, detergent })} key={detergent}>{detergent === 'Fresh linen' ? <Sparkles /> : <Leaf />}<strong>{detergent}</strong><small>No extra charge</small></button>)}</div><label>Special instructions <small>Optional</small><textarea placeholder="Gate code, leave at door, dog on property…" /></label><div className="deposit-panel"><div className="deposit-copy"><span><CircleDollarSign /> Pickup deposit</span><small>$10 minimum · Adjust in $1 increments</small></div><div className="deposit-picker"><button onClick={() => setDeposit(Math.max(10, deposit - 1))} disabled={deposit === 10} aria-label="Decrease deposit by one dollar"><Minus /></button><strong>${deposit}</strong><button onClick={() => setDeposit(Math.min(35, deposit + 1))} disabled={deposit === 35} aria-label="Increase deposit by one dollar"><Plus /></button></div></div><label>Payment method</label><div className="payment-grid">{(['Paystack', 'PayPal', 'Card'] as const).map(method => <button className={booking.paymentMethod === method ? 'selected' : ''} onClick={() => setBooking({ ...booking, paymentMethod: method })} key={method}><CreditCard /><strong>{method}</strong><small>{method === 'Card' ? 'Visa or Mastercard' : `Pay securely with ${method}`}</small></button>)}</div><div className="booking-total"><span><CircleDollarSign /> Order estimate</span><strong>$35.00</strong></div><p className="deposit-note"><ShieldCheck /> Your deposit is applied to the final total. You’ll only pay the remaining balance after your laundry is weighed.</p></div>}
+        <div className="modal-actions">{step > 1 && <Button variant="ghost" onClick={() => setStep(step - 1)}>Back</Button>}<Button className="next" onClick={() => step < 3 ? setStep(step + 1) : setDone(true)}>{step < 3 ? <>Continue <ArrowRight size={18} /></> : <>Pay ${deposit} deposit <Check size={18} /></>}</Button></div>
       </div>
     </div>
   );
