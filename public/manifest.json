@@ -1,0 +1,19 @@
+{
+  "name": "JKUAT Marketplace",
+  "short_name": "JK Market",
+  "description": "The official campus marketplace for JKUAT students and staff",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f8f5",
+  "theme_color": "#1a7a42",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%231a7a42'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='90' font-family='Arial Black' fill='white'>JM</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["shopping", "education"],
+  "lang": "en-KE"
+}

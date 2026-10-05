@@ -1,0 +1,12 @@
+{
+  "title": "TampaFresh Laundry | Pickup & Delivery in Tampa",
+  "description": "Friendly, reliable laundry pickup and delivery across Tampa. We pick up, wash, dry, fold, and return your clothes fresh in about 48 hours.",
+  "language": "en",
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": true,
+    "ignoreReducedMotion": false
+  }
+}
