@@ -12,6 +12,7 @@ import {
   Heart,
   HelpCircle,
   Leaf,
+  Mail,
   MapPin,
   Menu,
   MessageCircle,
@@ -100,7 +101,7 @@ function Header({ onBook, onTrack }: { onBook: () => void; onTrack: () => void }
       <div className="contact-strip">
         <div className="shell contact-inner">
           <span><MapPin size={14} /> 1427 E. Fowler Ave, Tampa, FL 33612</span>
-          <span className="contact-right"><a href="tel:+12038950187"><Phone size={14} /> +1 (203) 895-0187</a> <i /> Mon–Sat, 7am–8pm</span>
+          <span className="contact-right"><a href="tel:+12038950187"><Phone size={14} /> +1 (203) 895-0187</a> <i /> <a href="mailto:tampafresh.info@gmail.com"><Mail size={14} /> tampafresh.info@gmail.com</a> <i /> Mon–Sat, 7am–8pm</span>
         </div>
       </div>
       <header className="site-header">
@@ -330,7 +331,7 @@ function Footer({ onBook }: { onBook: () => void }) {
   return (
     <>
       <section className="cta"><div className="shell cta-inner"><div><span>Ready when you are</span><h2>Take laundry off your list this week.</h2><p>Your first pickup is just $35. No subscription required.</p></div><Button onClick={onBook}>Book my first pickup <ArrowRight size={18} /></Button></div></section>
-      <footer><div className="shell footer-grid"><div><Logo /><p>Fresh laundry, picked up and delivered by people you can trust.</p><div className="social-proof"><strong>★★★★★ 4.9</strong><span>380+ happy Tampa customers</span></div></div><div><strong>Explore</strong><a href="#how">How it works</a><a href="#pricing">Services & pricing</a><a href="#areas">Service areas</a><a href="#reviews">Reviews</a></div><div><strong>Trust & help</strong><a href="#reviews">Trust center</a><a href="#faq">FAQs</a><a href="mailto:hello@tampafresh.com">Contact us</a><a href="#top">Policies & guarantee</a></div><div><strong>Visit or call</strong><p>1427 E. Fowler Avenue<br />Tampa, FL 33612</p><a href="tel:+12038950187">+1 (203) 895-0187</a><a href="https://wa.me/12038950187" target="_blank" rel="noreferrer">Message us on WhatsApp</a><a href="mailto:hello@tampafresh.com">hello@tampafresh.com</a><p>Mon–Sat 7am–8pm<br />Sunday 8am–6pm</p></div></div><div className="shell footer-bottom"><span>© 2025 TampaFresh Laundry Co.</span><span>Secure payments by card, Paystack & PayPal · Insured & bonded</span></div></footer>
+      <footer><div className="shell footer-grid"><div><Logo /><p>Fresh laundry, picked up and delivered by people you can trust.</p><div className="social-proof"><strong>★★★★★ 4.9</strong><span>380+ happy Tampa customers</span></div></div><div><strong>Explore</strong><a href="#how">How it works</a><a href="#pricing">Services & pricing</a><a href="#areas">Service areas</a><a href="#reviews">Reviews</a></div><div><strong>Trust & help</strong><a href="#reviews">Trust center</a><a href="#faq">FAQs</a><a href="mailto:tampafresh.info@gmail.com">Contact us</a><a href="#top">Policies & guarantee</a></div><div><strong>Visit or call</strong><p>1427 E. Fowler Avenue<br />Tampa, FL 33612</p><a href="tel:+12038950187">+1 (203) 895-0187</a><a href="https://wa.me/12038950187" target="_blank" rel="noreferrer">Message us on WhatsApp</a><a href="mailto:tampafresh.info@gmail.com">tampafresh.info@gmail.com</a><p>Mon–Sat 7am–8pm<br />Sunday 8am–6pm</p></div></div><div className="shell footer-bottom"><span>© 2025 TampaFresh Laundry Co.</span><span>Secure payments by card, Paystack & PayPal · Insured & bonded</span></div></footer>
     </>
   );
 }
@@ -396,5 +397,5 @@ export default function App() {
     <FAQ />
     <Footer onBook={() => setBooking(true)} />
   </>, []);
-  return <div>{content}{booking && <BookingModal onClose={() => setBooking(false)} />}{tracking && <TrackingModal onClose={() => setTracking(false)} />}<div className={`help-widget ${help ? 'open' : ''}`}>{help && <div className="help-menu"><strong>How can we help?</strong><a href="tel:+12038950187"><Phone /> Call +1 (203) 895-0187</a><a href="https://wa.me/12038950187" target="_blank" rel="noreferrer"><MessageCircle /> WhatsApp us</a><a href="mailto:hello@tampafresh.com"><HelpCircle /> Email support</a></div>}<button onClick={() => setHelp(!help)}>{help ? <X /> : <MessageCircle />}<span>{help ? 'Close' : 'Need help?'}</span></button></div></div>;
+  return <div>{content}{booking && <BookingModal onClose={() => setBooking(false)} />}{tracking && <TrackingModal onClose={() => setTracking(false)} />}<div className={`help-widget ${help ? 'open' : ''}`}>{help && <div className="help-menu"><strong>How can we help?</strong><a href="tel:+12038950187"><Phone /> Call +1 (203) 895-0187</a><a href="https://wa.me/12038950187" target="_blank" rel="noreferrer"><MessageCircle /> WhatsApp us</a><a href="mailto:tampafresh.info@gmail.com"><HelpCircle /> Email support</a></div>}<button onClick={() => setHelp(!help)}>{help ? <X /> : <MessageCircle />}<span>{help ? 'Close' : 'Need help?'}</span></button></div></div>;
 }
