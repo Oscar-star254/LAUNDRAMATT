@@ -31,6 +31,7 @@ h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); margin-bottom: 18px; }
 .kicker { color: var(--teal); display: block; font-size: .78rem; font-weight: 800; letter-spacing: .14em; margin-bottom: 15px; text-transform: uppercase; }
 .btn { align-items: center; border: 0; border-radius: 12px; display: inline-flex; font-weight: 700; gap: 9px; justify-content: center; min-height: 50px; padding: 0 22px; transition: .2s ease; }
 .btn:hover { transform: translateY(-2px); }
+.btn:disabled { box-shadow: none; cursor: not-allowed; opacity: .52; transform: none; }
 .btn-primary { background: var(--coral); box-shadow: 0 8px 24px #f4775e3b; color: #fff; }
 .btn-primary:hover { background: #db624b; }
 .btn-secondary { background: var(--teal-light); color: var(--teal-dark); }
@@ -200,6 +201,14 @@ footer { background: #081f35; }
 .payment-verification svg { flex: 0 0 auto; height: 17px; }
 .payment-verification.processing { background: #fff7e6; color: #806020; }
 .payment-verification.verified { background: #e7f7ed; color: #17633c; }
+.payment-verification.setup-required { background: #fff1ed; color: #934431; }
+.phone-input { align-items: center; border: 1px solid #cddbd7; border-radius: 10px; display: flex; overflow: hidden; }
+.phone-input:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px #079bd315; }
+.phone-input span { align-items: center; align-self: stretch; background: #edf5fa; border-right: 1px solid #cddbd7; color: var(--ink); display: flex; font-weight: 700; padding: 0 13px; }
+.phone-input input { border: 0; border-radius: 0; box-shadow: none !important; flex: 1; min-width: 0; }
+.phone-hint { color: #a24a38; font-size: .68rem; margin: -7px 0 0; }
+.phone-hint.valid { align-items: center; color: #17633c; display: flex; gap: 5px; }
+.phone-hint svg { height: 15px; }
 .contact-right a { align-items: center; display: inline-flex; gap: 7px; }
 .driver-card a { align-items: center; background: #fff; border: 1px solid #d8e4e1; border-radius: 8px; color: var(--teal); display: flex; height: 35px; justify-content: center; width: 35px; }
 .driver-card a svg { height: 17px; }
